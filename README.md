@@ -20,17 +20,17 @@
 
 ## Descrição do desafio
 
-A descrição completa do desafio pode ser encontrada no seguinte link:
+A descrição completa do desafio pode ser encontrada no seguinte link: [Descrição do Desafio](https://github.com/brain-ag/trabalhe-conosco/blob/main/README.md)
 
-[Descrição do Desafio](https://github.com/brain-ag/trabalhe-conosco/blob/main/README.md)
+# Execução do projeto
 
-## Execução do projeto
+## Podemos instalar as dependências com:
 
 ```bash
 $ npm install
 ```
 
-## Podemos compilar e executar com:
+## Podemos a aplicação com:
 
 ```bash
 # development
