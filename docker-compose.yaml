@@ -6,27 +6,31 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "3000:${PORT}"
     environment:
-      - NODE_ENV=development
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_USER=postgres
-      - DB_PASS=password
-      - DB_NAME=serasa_brain_ag_challenge
+      - NODE_ENV=${NODE_ENV}
+      - DB_HOST=${TYPEORM_HOST}
+      - DB_PORT=${TYPEORM_PORT}
+      - DB_USER=${TYPEORM_USERNAME}
+      - DB_PASS=${TYPEORM_PASSWORD}
+      - DB_NAME=${TYPEORM_DATABASE}
     depends_on:
-      - db
+      - serasa-brain-ag-challenge-db
+    env_file:
+      - .env
+    networks:
+      - backend
 
   serasa-brain-ag-challenge-db:
     image: postgres:13-alpine
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: serasa_brain_ag_challenge
+      POSTGRES_USER: ${TYPEORM_USERNAME}
+      POSTGRES_PASSWORD: ${TYPEORM_PASSWORD}
+      POSTGRES_DB: ${TYPEORM_DATABASE}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5432:${TYPEORM_PORT}"
     networks:
       - backend
 
