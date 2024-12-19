@@ -20,13 +20,13 @@
 
 ## Descrição do desafio
 
-A descrição completa do desafio pode ser encontrada no seguinte link: [Descrição do Desafio](https://github.com/brain-ag/trabalhe-conosco/blob/main/README.md)
+A descrição completa do desafio pode ser encontrada no seguinte [link](https://github.com/brain-ag/trabalhe-conosco/blob/main/README.md)
 
 ## Execução do projeto localmente com o docker-compose
 
 
-1) Inicialmente, podemos conferir se existem processos executando nas portas 3000 e 5432
-Caso houver, precisamos desliga-los temporariamente
+1) Inicialmente, podemos conferir se existem processos executando nas portas 3000 e 5432. 
+Caso houver, precisamos desliga-los temporariamente para a execução do projeto.
 
 2) Podemos copiar o .env.example existente na raiz do projeto, e duplicá-lo com o nome .env:
 
@@ -41,9 +41,10 @@ $ docker-compose up
 
 Visando que o docker-compose do projeto levante 2 containers usando as variáveis de ambiente contidas no `.env`:
 
-- 1 associado a aplicação: serasa-brain-ag-challenge-app)
+- 1 associado a aplicação nest: serasa-brain-ag-challenge-app)
 - 1 associado ao database postgres: serasa-brain-ag-challenge-db
 
+Ocorrendo assim este preview de execução:
 
 <img src="./.github/image/execution-preview.png" style="margin-left: 0px"
      alt="Preview de execução com o docker-compose" width="700">
