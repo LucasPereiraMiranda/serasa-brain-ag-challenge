@@ -1,4 +1,4 @@
-<h1 align="center"> Dotenv centralizer </h1>
+<h1 align="center"> Serasa Brain AG Challenge </h1>
 
 <p align="center">
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/LucasPereiraMiranda/serasa-brain-ag-challenge">
