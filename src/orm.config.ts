@@ -13,9 +13,9 @@ export const ormConfig = {
   password: envConfig.db.password,
   autoLoadEntities: envConfig.db.autoLoadEntities,
   database: envConfig.db.database,
-  entities: [`${__dirname}/**/*.entity{.ts,.js}`],
   migrations: [path.join(__dirname, '/migrations/*{.ts,.js}')],
   migrationsTableName: 'migrations',
+  entities: [path.join(__dirname, '/**/*.entity{.ts,.js}')],
 };
 
 const datasource = new DataSource(ormConfig);
