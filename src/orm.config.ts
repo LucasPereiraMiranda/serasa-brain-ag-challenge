@@ -23,10 +23,10 @@ const datasource = new DataSource(ormConfig);
 datasource
   .initialize()
   .then(() => {
-    console.log('Data Source has been initialized!');
+    console.log('Typeorm Data Source has been initialized!');
   })
   .catch((err) => {
-    console.error('Error during Data Source initialization!', err);
+    console.error('Error during Typeorm Data Source initialization!', err);
   });
 
 export default datasource;
