@@ -36,8 +36,9 @@ $ cp .env.example .env # em ambiente linux
 
 3) Podemos executar a instrução:
 ```bash
-$ docker-compose up
+$ docker-compose up --build
 ```
+
 
 Visando que o docker-compose do projeto levante 2 containers usando as variáveis de ambiente contidas no `.env`:
 
@@ -50,6 +51,19 @@ Ocorrendo assim este preview de execução:
      alt="Preview de execução com o docker-compose" width="700">
 
 
+Para rodar migrations, podemos criar a entidade, e após isto rodar:
+
+```bash
+$ npm run migration:generate
+```
+
+Para criar a migration gerada, podemos rodar:
+
+```bash
+$ npm run migration:run
+```
+
+Com o banco apontando para localhost durante a execução da migration
 
 ## License
 
