@@ -57,7 +57,6 @@ export class GrowerService {
     findAllGrowerRequestDto: FindAllGrowerQueryRequestDto,
   ): Promise<FindAllGrowerResponseDto> {
     const { take, skip } = findAllGrowerRequestDto;
-    console.log(take, skip);
     const [data, count] = await Promise.all([
       this.growerRepository.find({
         take,
