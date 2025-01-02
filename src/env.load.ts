@@ -20,6 +20,8 @@ interface ConfigProps {
   };
 }
 
+const env: any = process.env;
+
 const ensureEnvVar = (name: string, value: any): any => {
   if (value === undefined || value === null || value === '') {
     throw new Error(`Missing environment variable: ${name}`);
@@ -27,7 +29,11 @@ const ensureEnvVar = (name: string, value: any): any => {
   return value;
 };
 
-const env: any = process.env;
+const parseBoolean = (value: string): boolean => {
+  if (value === 'true') return true;
+  if (value === 'false') return false;
+  throw new Error(`Invalid boolean value for: ${value}`);
+};
 
 export const envConfig: ConfigProps = {
   api: {
@@ -41,15 +47,18 @@ export const envConfig: ConfigProps = {
     password: ensureEnvVar('TYPEORM_PASSWORD', env.TYPEORM_PASSWORD),
     database: ensureEnvVar('TYPEORM_DATABASE', env.TYPEORM_DATABASE),
     port: ensureEnvVar('TYPEORM_PORT', env.TYPEORM_PORT),
-    synchronize: ensureEnvVar('TYPEORM_SYNCHRONIZE', env.TYPEORM_SYNCHRONIZE),
-    logging: ensureEnvVar('TYPEORM_LOGGING', env.TYPEORM_LOGGING),
-    migrationsRun: ensureEnvVar(
-      'TYPEORM_MIGRATIONS_RUN',
-      env.TYPEORM_MIGRATIONS_RUN,
+    synchronize: parseBoolean(
+      ensureEnvVar('TYPEORM_SYNCHRONIZE', env.TYPEORM_SYNCHRONIZE),
     ),
-    autoLoadEntities: ensureEnvVar(
-      'TYPEORM_AUTO_LOAD_ENTITIES',
-      env.TYPEORM_AUTO_LOAD_ENTITIES,
+    logging: parseBoolean(ensureEnvVar('TYPEORM_LOGGING', env.TYPEORM_LOGGING)),
+    migrationsRun: parseBoolean(
+      ensureEnvVar('TYPEORM_MIGRATIONS_RUN', env.TYPEORM_MIGRATIONS_RUN),
+    ),
+    autoLoadEntities: parseBoolean(
+      ensureEnvVar(
+        'TYPEORM_AUTO_LOAD_ENTITIES',
+        env.TYPEORM_AUTO_LOAD_ENTITIES,
+      ),
     ),
   },
 };
