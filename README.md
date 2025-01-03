@@ -18,15 +18,32 @@
   </a>
 </p>
 
+
+
 ## Descrição do desafio
 
 A descrição completa do desafio pode ser encontrada no seguinte [link](https://github.com/brain-ag/trabalhe-conosco/blob/main/README.md)
+
+## Techs
+
+A implementação do desafio está utilizando as seguintes tecnologias:
+
+- [Typescript](https://www.typescriptlang.org/)
+- [Nest](https://nestjs.com/)
+- [Node](https://nodejs.org/en)
+- [Typeorm](https://typeorm.io/)
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+- [Postgres](https://www.postgresql.org/)
+- [Jest](https://jestjs.io/pt-BR/)
+- [Swagger](https://swagger.io/)
+
 
 ## Execução do projeto localmente com o docker-compose
 
 
 1) Inicialmente, podemos conferir se existem processos executando nas portas 3000 e 5432. 
-Caso houver, precisamos desliga-los temporariamente para a execução do projeto.
+Caso houver, precisamos desliga-los temporariamente para a execução do projeto a partir do docker-compose.
 
 2) Podemos copiar o .env.example existente na raiz do projeto, e duplicá-lo com o nome .env:
 
@@ -42,7 +59,7 @@ $ docker-compose up --build
 
 Visando que o docker-compose do projeto levante 2 containers usando as variáveis de ambiente contidas no `.env`:
 
-- 1 associado a aplicação nest: serasa-brain-ag-challenge-app)
+- 1 associado a aplicação nest: serasa-brain-ag-challenge-app
 - 1 associado ao database postgres: serasa-brain-ag-challenge-db
 
 Ocorrendo assim este preview de execução:
