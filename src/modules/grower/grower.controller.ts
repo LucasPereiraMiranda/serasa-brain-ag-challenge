@@ -66,7 +66,7 @@ export class GrowerController {
   async update(
     @Param() updateGrowerParamsRequestDto: UpdateGrowerParamsRequestDto,
     @Body() updateGrowerBodyRequestDto: UpdateGrowerBodyRequestDto,
-  ) {
+  ): Promise<UpdateGrowerResponseDto> {
     return this.growerService.update(
       updateGrowerParamsRequestDto,
       updateGrowerBodyRequestDto,
@@ -105,7 +105,9 @@ export class GrowerController {
     description: 'Proprietário não encontrado por id',
   })
   @ApiParam({ name: 'id', description: 'Id do proprietário', type: String })
-  async findOneById(@Param() { id }: FindOneByIdGrowerParamsRequestDto) {
+  async findOneById(
+    @Param() { id }: FindOneByIdGrowerParamsRequestDto,
+  ): Promise<FindOneByIdGrowerResponseDto> {
     return this.growerService.findOneById(id);
   }
 
