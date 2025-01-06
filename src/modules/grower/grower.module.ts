@@ -8,5 +8,6 @@ import { GrowerController } from './grower.controller';
   imports: [TypeOrmModule.forFeature([Grower])],
   controllers: [GrowerController],
   providers: [GrowerService],
+  exports: [GrowerService],
 })
 export class GrowerModule {}
