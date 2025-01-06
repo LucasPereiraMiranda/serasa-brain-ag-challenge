@@ -1,6 +1,7 @@
-import { Column, Entity, Unique } from 'typeorm';
+import { Column, Entity, OneToMany, Unique } from 'typeorm';
 import { BaseEntity } from '../common/entity/base.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { AgriculturalProperty } from '../agricutural-property/agricultural-property.entity';
 
 @Entity()
 @Unique(['document'])
@@ -21,4 +22,10 @@ export class Grower extends BaseEntity {
   })
   @Column({ name: 'document', type: 'varchar', length: 14 })
   document: string;
+
+  @OneToMany(
+    () => AgriculturalProperty,
+    (agriculturalProperty) => agriculturalProperty.grower,
+  )
+  agriculturalProperty: AgriculturalProperty[];
 }

@@ -18,6 +18,7 @@ import { UpdateGrowerResponseDto } from './dto/response/update-grower.request.dt
 import { DeleteGrowerResponseDto } from './dto/response/delete-grower.response.dto';
 import { FindAllGrowerResponseDto } from './dto/response/findAll-grower.response.dto';
 import { FindAllGrowerQueryRequestDto } from './dto/request/findAll-grower.request.dto';
+import { FindOneByIdGrowerResponseDto } from './dto/response/findOneById-grower.response.dto';
 
 @Injectable()
 export class GrowerService {
@@ -71,7 +72,7 @@ export class GrowerService {
     };
   }
 
-  async findOneById(id: string): Promise<Grower> {
+  async findOneById(id: string): Promise<FindOneByIdGrowerResponseDto> {
     const grower = await this.growerRepository.findOne({
       where: { id },
     });
