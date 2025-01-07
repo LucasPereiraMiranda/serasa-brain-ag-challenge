@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateCropResponseDto } from './dto/response/create-crop.response.dto';
 import { CreateCropRequestDto } from './dto/request/create-crop.request.dto';
 import { Crop } from './crop.entity';
@@ -30,6 +30,11 @@ export class CropService {
     }
 
     return crop;
+  }
+
+  async findByIds(ids: string[]): Promise<Crop[]> {
+    const crops = await this.cropRepository.findBy({ id: In(ids) });
+    return crops;
   }
 
   async findAll(

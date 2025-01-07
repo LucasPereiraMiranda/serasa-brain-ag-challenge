@@ -8,5 +8,6 @@ import { CropService } from '../crop/crop.service';
   imports: [TypeOrmModule.forFeature([Crop])],
   controllers: [CropController],
   providers: [CropService],
+  exports: [CropService],
 })
 export class CropModule {}
