@@ -8,6 +8,8 @@ import { FindOneByIdHarvestResponseDto } from './dto/response/findOneById-harves
 import { FindAllHarvestQueryRequestDto } from './dto/request/findAll-harvest.request.dto';
 import { FindAllHarvestResponseDto } from './dto/response/findAll-harvest.response.dto';
 import { AgriculturalPropertyService } from '../agricutural-property/agricultural-property.service';
+import { CropService } from '../crop/crop.service';
+import { HarvestToCrop } from '../harvest-to-crop/harvest-to-crop.entity';
 
 @Injectable()
 export class HarvestService {
@@ -16,6 +18,10 @@ export class HarvestService {
     private harvestRepository: Repository<Harvest>,
     @Inject(AgriculturalPropertyService)
     private agriculturalPropertyService: AgriculturalPropertyService,
+    @Inject(CropService)
+    private cropService: CropService,
+    @InjectRepository(HarvestToCrop)
+    private harvestToCropRepository: Repository<HarvestToCrop>,
   ) {}
 
   async create(
@@ -37,6 +43,7 @@ export class HarvestService {
   async findOneById(id: string): Promise<FindOneByIdHarvestResponseDto> {
     const harvest = await this.harvestRepository.findOne({
       where: { id },
+      relations: ['harvestToCrops', 'harvestToCrops.crop'],
     });
 
     if (!harvest) {
@@ -62,5 +69,54 @@ export class HarvestService {
       data,
       count,
     };
+  }
+
+  async addCropsToHarvest(harvestId: string, cropIds: string[]): Promise<any> {
+    const harvest = await this.findOneById(harvestId);
+
+    const cropsToAdd = await this.cropService.findByIds(cropIds);
+
+    if (cropsToAdd.length === 0) {
+      throw new NotFoundException('No crops found with the provided IDs');
+    }
+
+    const existingCropIds = new Set(
+      harvest.harvestToCrops.map((harvestToCrop) => harvestToCrop.crop.id),
+    );
+    const newRelations = cropsToAdd
+      .filter((crop) => !existingCropIds.has(crop.id))
+      .map((crop) => {
+        const harvestToCrop = this.harvestToCropRepository.create({
+          harvest,
+          crop,
+        });
+        return harvestToCrop;
+      });
+
+    await this.harvestToCropRepository.save([
+      ...harvest.harvestToCrops,
+      ...newRelations,
+    ]);
+
+    return await this.findOneById(harvestId);
+  }
+
+  async removeCropsFromHarvest(
+    harvestId: string,
+    cropIds: string[],
+  ): Promise<Harvest> {
+    const harvest = await this.findOneById(harvestId);
+
+    const cropsToRemove = harvest.harvestToCrops.filter((harvestToCrop) =>
+      cropIds.includes(harvestToCrop.crop.id),
+    );
+
+    if (cropsToRemove.length === 0) {
+      throw new NotFoundException('No crops found to remove.');
+    }
+
+    await this.harvestToCropRepository.remove(cropsToRemove);
+
+    return await this.findOneById(harvestId);
   }
 }
