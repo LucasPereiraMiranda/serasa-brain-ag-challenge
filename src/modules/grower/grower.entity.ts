@@ -27,5 +27,5 @@ export class Grower extends BaseEntity {
     () => AgriculturalProperty,
     (agriculturalProperty) => agriculturalProperty.grower,
   )
-  agriculturalProperty: AgriculturalProperty[];
+  agriculturalProperties: AgriculturalProperty[];
 }
