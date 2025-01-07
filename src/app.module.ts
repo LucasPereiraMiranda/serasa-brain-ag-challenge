@@ -5,7 +5,7 @@ import { GrowerModule } from './modules/grower/grower.module';
 import { AgriculturalPropertyModule } from './modules/agricutural-property/agricultural-property.module';
 import { HealthCheckModule } from './modules/health-check/health-check.module';
 import { HarvestModule } from './modules/harvest/harvest.module';
-import { CropModule } from './modules/harvest/crop.module';
+import { CropModule } from './modules/crop/crop.module';
 
 @Module({
   imports: [
