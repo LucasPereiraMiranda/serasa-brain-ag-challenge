@@ -9,5 +9,6 @@ import { GrowerModule } from '../grower/grower.module';
   imports: [TypeOrmModule.forFeature([AgriculturalProperty]), GrowerModule],
   controllers: [AgriculturalPropertyController],
   providers: [AgriculturalPropertyService],
+  exports: [AgriculturalPropertyService],
 })
 export class AgriculturalPropertyModule {}
