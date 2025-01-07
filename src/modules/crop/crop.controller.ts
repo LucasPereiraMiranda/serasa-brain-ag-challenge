@@ -14,6 +14,7 @@ import { FindOneByIdCropResponseDto } from './dto/response/findOneById-harvest.r
 import { FindAllCropResponseDto } from './dto/response/findAll-harvest.response.dto';
 import { FindAllCropQueryRequestDto } from './dto/request/findAll-crop.request.dto';
 import { CropService } from './crop.service';
+import { CreateCropRequestDto } from './dto/request/create-crop.request.dto';
 
 @Controller('crop')
 @ApiTags('Crop - Cultura')
@@ -29,7 +30,7 @@ export class CropController {
   })
   create(
     @Body()
-    createCropRequestDto: any,
+    createCropRequestDto: CreateCropRequestDto,
   ): Promise<CreateCropResponseDto> {
     return this.CropService.create(createCropRequestDto);
   }

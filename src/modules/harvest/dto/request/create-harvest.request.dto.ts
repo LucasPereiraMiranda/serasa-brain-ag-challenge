@@ -13,7 +13,7 @@ export class CreateHarvestRequestDto {
 
   @ApiProperty({
     type: String,
-    example: '2024',
+    example: '2021',
     description:
       'Ano associado à safra, deve conter exatamente 4 dígitos numéricos',
   })

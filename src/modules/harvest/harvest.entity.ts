@@ -1,7 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from '../common/entity/base.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { AgriculturalProperty } from '../agricutural-property/agricultural-property.entity';
+import { HarvestToCrop } from '../harvest-to-crop/harvest-to-crop.entity';
 
 @Entity()
 export class Harvest extends BaseEntity {
@@ -32,6 +33,6 @@ export class Harvest extends BaseEntity {
   @JoinColumn({ name: 'harvest_id' })
   agriculturalProperty: AgriculturalProperty;
 
-  //   @ManyToMany(() => Crop, (crop) => crop.harverts)
-  //   crops: Crop[];
+  @OneToMany(() => HarvestToCrop, (harvestToCrop) => harvestToCrop.harvest)
+  public harvestToCrops: HarvestToCrop[];
 }
