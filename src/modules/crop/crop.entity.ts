@@ -1,6 +1,7 @@
-import { Column, Entity, Unique } from 'typeorm';
+import { Column, Entity, OneToMany, Unique } from 'typeorm';
 import { BaseEntity } from '../common/entity/base.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { HarvestToCrop } from '../harvest-to-crop/harvest-to-crop.entity';
 
 @Entity()
 @Unique(['name'])
@@ -13,7 +14,6 @@ export class Crop extends BaseEntity {
   @Column({ type: 'varchar', length: 50 })
   name: string;
 
-  // @ManyToMany(() => Harvest, (harvest) => harvest.crops)
-  // @JoinTable()
-  // harverts: Harvest[];
+  @OneToMany(() => HarvestToCrop, (harvestToCrop) => harvestToCrop.crop)
+  public harvestToCrops: HarvestToCrop[];
 }
