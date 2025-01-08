@@ -47,8 +47,11 @@ O diagrama de entidade-relacionamento (DER) a seguir foi modelado para represent
      alt="Diagrama entidade relacionamento modelado para o desafio" width="700">
 
 
-## Execução do projeto localmente com o docker-compose
+## Execução do projeto
 
+### Docker-compose
+
+Para executarmos o projeto com o docker-compose:
 
 1) Inicialmente, podemos conferir se existem processos executando nas portas 3000 e 5432. 
 
@@ -75,6 +78,30 @@ Ocorrendo assim este preview de execução:
 
 <img src="./.github/image/execution-preview.png" style="margin-left: 0px"
      alt="Preview de execução com o docker-compose" width="700">
+
+### Modo local (sem containers)
+
+Para executarmos o projeto com o modo local
+
+1) Podemos copiar o .env.example existente na raiz do projeto, e duplicá-lo com o nome .env:
+
+```bash
+$ cp .env.example .env # em ambiente linux
+```
+
+2) Podemos instalar as dependencias:
+
+```bash
+$ npm install
+```
+
+3) Podemos criar o banco de dados, levando em consideração os valores contidos no .env
+
+3) Podemos executar o projeto em modo de desenvolvimento:
+
+```bash
+$ npm run start:dev
+```
 
 ## Execução dos testes
 
@@ -116,7 +143,7 @@ A aplicação contém um Swagger, que inclui os contratos e especificações par
 $ http://localhost:3000/api#/
 ```
 
-O preview do swagger é este abaixo:
+O preview do swagger esta presente na imagem abaixo:
 
 <img src="./.github/image/swagger-preview.png" style="margin-left: 0px"
      alt="Preview de execução do swagger" width="700">
@@ -131,20 +158,24 @@ Para garantir que o sistema seja capaz de suportar um grande número de usuário
 - **Adição de Índices**: Índices foram adicionados nas colunas frequentemente acessadas, como nativamente nas chaves primárias e em colunas usadas em filtros e buscas (crop.name), para melhorar o desempenho geral das consultas.
 
 
-- **Adição de Cache**: A utilização de cache foi implementada por meio da estratégia de armazenar resultados de consultas frequentes, reduzindo a carga nas tabelas que crescerão em densidade de dados com o intuito de acelerar a resposta para os usuários e reduzir cargas no banco. A estratégia utilizada está contida no presente [link](https://orkhan.gitbook.io/typeorm/docs/caching).
+- **Adição de Cache**: A utilização de cache foi implementada por meio da estratégia de armazenar resultados de consultas frequentes, reduzindo a carga nas tabelas que crescerão em densidade de dados com o intuito de manter um tempo saudável de resposta para os usuários e reduzir cargas no banco. A estratégia utilizada está contida no presente [link](https://orkhan.gitbook.io/typeorm/docs/caching).
 
 ### Estratégias para observabilidade
 
-A observabilidade foi um fator importante para garantir a saúde e o bom funcionamento do sistema. Para isso, foram implementadas as seguintes estratégias:
+A observabilidade é um fator importante para garantir o bom funcionamento do sistema produtivo. Para isso, foram implementadas as seguintes estratégias no desafio:
+
+
+- **Colunas para histórico de comportamento das entidades**: Embora as colunas created_at e updated_at não sejam diretamente responsáveis pela monitoração do sistema em tempo real, elas fornecem informações importantes sobre o histórico e o comportamento dos registros ao longo do tempo. Esses dados podem ser utilizados para auditoria no decorrer do tempo.
 
 - **Criação de Fluxo de Health Check**: Foi implementado um fluxo de health check para observar o status das partes críticas do sistema, como banco de dados.
 
-- **Colunas para histórico de comportamento das entidades**: Embora os campos created_at e updated_at não sejam diretamente responsáveis pela monitoração do sistema em tempo real, eles fornecem informações importantes sobre o histórico e o comportamento das entidades ao longo do tempo. Esses dados podem ser utilizados para auditoria e rastreamento no decorrer do tempo.
+<img src="./.github/image/health-check-preview.png" style="margin-left: 0px"
+     alt="Preview do health check da aplicação" width="700">
 
 
 Estratégias que podem ser propostas:
 
-- **APM**: Como passo futuro, pode ser sugerido a adição de um APM como [Elastic](https://www.elastic.co/pt/observability/application-performance-monitoring) ou [Datadog](https://www.datadoghq.com/product/apm/) para ajudar na observabilidade geral da aplicação. 
+- **APM**: Como passo futuro, pode ser sugerido a adição de um APM como [Elastic](https://www.elastic.co/pt/observability/application-performance-monitoring) ou [Datadog](https://www.datadoghq.com/product/apm/) para ajudar na observabilidade geral da aplicação.
 
 
 ## License
