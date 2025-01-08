@@ -80,7 +80,7 @@ describe('HarvestService', () => {
   describe('create harvest', () => {
     it('should successfully create harvest', async () => {
       harvestRepositoryMock.create = jest.fn().mockResolvedValue(harvestMock);
-
+      harvestRepositoryMock.findOne = jest.fn().mockResolvedValue(harvestMock);
       agriculturalPropertyService.findOneById = jest
         .fn()
         .mockResolvedValue(agriculturalPropertyMock);

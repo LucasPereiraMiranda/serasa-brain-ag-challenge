@@ -28,9 +28,9 @@ export class GrowerService {
   ) {}
 
   async create(
-    createGrowerRequestDto: CreateGrowerRequestDto,
+    growerToCreate: CreateGrowerRequestDto,
   ): Promise<CreateGrowerResponseDto> {
-    const { document } = createGrowerRequestDto;
+    const { document } = growerToCreate;
 
     const alreadyExists = await this.findOneByDocument(document);
     if (alreadyExists) {
@@ -44,7 +44,7 @@ export class GrowerService {
       throw new BadRequestException(`Document ${document} is not valid`);
     }
 
-    return await this.growerRepository.save(createGrowerRequestDto);
+    return await this.growerRepository.save(growerToCreate);
   }
 
   async findOneByDocument(document: string): Promise<Grower> {
@@ -55,9 +55,9 @@ export class GrowerService {
   }
 
   async findAll(
-    findAllGrowerRequestDto: FindAllGrowerQueryRequestDto,
+    input: FindAllGrowerQueryRequestDto,
   ): Promise<FindAllGrowerResponseDto> {
-    const { take, skip } = findAllGrowerRequestDto;
+    const { take, skip } = input;
     const [data, count] = await Promise.all([
       this.growerRepository.find({
         take,
@@ -72,9 +72,13 @@ export class GrowerService {
     };
   }
 
-  async findOneById(id: string): Promise<FindOneByIdGrowerResponseDto> {
+  async findOneById(
+    id: string,
+    relations?: string[],
+  ): Promise<FindOneByIdGrowerResponseDto> {
     const grower = await this.growerRepository.findOne({
       where: { id },
+      relations,
     });
 
     if (!grower) {
@@ -98,7 +102,16 @@ export class GrowerService {
   }
 
   async delete(id: string): Promise<DeleteGrowerResponseDto> {
-    const existentGrower = await this.findOneById(id);
+    const existentGrower = await this.findOneById(id, [
+      'agriculturalProperties',
+    ]);
+
+    if (existentGrower?.agriculturalProperties?.length > 0) {
+      throw new BadRequestException(
+        `Unable to delete grower with id ${id}. This grower has one or more associated agricultural properties. Please remove or reassign the properties before attempting deletion.`,
+      );
+    }
+
     const { affected } = await this.growerRepository.delete({
       id: existentGrower.id,
     });

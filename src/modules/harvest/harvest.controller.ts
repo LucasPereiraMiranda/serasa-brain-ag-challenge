@@ -45,9 +45,9 @@ export class HarvestController {
   })
   create(
     @Body()
-    body: CreateHarvestRequestDto,
+    input: CreateHarvestRequestDto,
   ): Promise<CreateHarvestResponseDto> {
-    return this.harvestService.create(body);
+    return this.harvestService.create(input);
   }
 
   @Get(':id')
@@ -86,9 +86,9 @@ export class HarvestController {
   })
   async findAll(
     @Query()
-    queries: FindAllHarvestQueryRequestDto,
+    input: FindAllHarvestQueryRequestDto,
   ): Promise<FindAllHarvestResponseDto> {
-    return this.harvestService.findAll(queries);
+    return this.harvestService.findAll(input);
   }
 
   @ApiOperation({
@@ -111,11 +111,11 @@ export class HarvestController {
   })
   @Post(':id/crops')
   async addCrops(
-    @Param() params: AddCropsHarvestParamRequestDto,
-    @Body() body: AddCropsHarvestBodyRequestDto,
+    @Param() inputParams: AddCropsHarvestParamRequestDto,
+    @Body() inputBody: AddCropsHarvestBodyRequestDto,
   ) {
-    const { id } = params;
-    const { cropIds } = body;
+    const { id } = inputParams;
+    const { cropIds } = inputBody;
     return this.harvestService.addCropsToHarvest(id, cropIds);
   }
 
@@ -139,11 +139,11 @@ export class HarvestController {
   })
   @Delete(':id/crops')
   async removeCrops(
-    @Param() params: RemoveCropsHarvestParamRequestDto,
-    @Body() body: RemoveCropsHarvestBodyRequestDto,
+    @Param() inputParams: RemoveCropsHarvestParamRequestDto,
+    @Body() inputBody: RemoveCropsHarvestBodyRequestDto,
   ) {
-    const { id } = params;
-    const { cropIds } = body;
+    const { id } = inputParams;
+    const { cropIds } = inputBody;
     return this.harvestService.removeCropsFromHarvest(id, cropIds);
   }
 }
