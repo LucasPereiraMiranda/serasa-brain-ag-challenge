@@ -27,16 +27,16 @@ export class HarvestService {
   ) {}
 
   async create(
-    data: CreateHarvestRequestDto,
+    harvestToCreate: CreateHarvestRequestDto,
   ): Promise<CreateHarvestResponseDto> {
-    const { agriculturalPropertyId } = data;
+    const { agriculturalPropertyId } = harvestToCreate;
 
     const agriculturalProperty =
       await this.agriculturalPropertyService.findOneById(
         agriculturalPropertyId,
       );
     const harvest = this.harvestRepository.create({
-      ...data,
+      ...harvestToCreate,
       agriculturalProperty,
     });
     await this.harvestRepository.save(harvest);
