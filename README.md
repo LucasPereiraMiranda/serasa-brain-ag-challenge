@@ -106,7 +106,46 @@ Para gerar uma nova migration a partir de uma nova entidade, podemos executar:
 $ npm run migration:generate
 ```
 
-`Observação`: Para executar estes processos, precisamos que o container associado ao postgres esteja ativo. Para executar as migrations via terminal, precisamos apontar para o container (no redirecionamento para o localhost) durante a execução da migration.
+**Observação**: Para executar estes processos, precisamos que o container associado ao postgres esteja ativo. Para executar as migrations via terminal, precisamos apontar para o container (no redirecionamento para o localhost) durante a execução da migration.
+
+## Swagger
+
+A aplicação contém um Swagger, que inclui os contratos e especificações para comunicação com a API. Ao executar a aplicação localmente com o Docker, o Swagger pode ser acessado por meio da seguinte URI:
+
+```bash
+$ http://localhost:3000/api#/
+```
+
+O preview do swagger é este abaixo:
+
+<img src="./.github/image/swagger-preview.png" style="margin-left: 0px"
+     alt="Preview de execução do swagger" width="700">
+
+
+## Considerações feitas durante o desenvolvimento
+
+### Estratégias para escalabilidade e confiabilidade em situações de grande carga
+
+Para garantir que o sistema seja capaz de suportar um grande número de usuários simultâneos, foram implementadas as seguintes soluções:
+
+- **Adição de Índices**: Índices foram adicionados nas colunas frequentemente acessadas, como nativamente nas chaves primárias e em colunas usadas em filtros e buscas (crop.name), para melhorar o desempenho geral das consultas.
+
+
+- **Adição de Cache**: A utilização de cache foi implementada por meio da estratégia de armazenar resultados de consultas frequentes, reduzindo a carga nas tabelas que crescerão em densidade de dados com o intuito de acelerar a resposta para os usuários e reduzir cargas no banco. A estratégia utilizada está contida no presente [link](https://orkhan.gitbook.io/typeorm/docs/caching).
+
+### Estratégias para observabilidade
+
+A observabilidade foi um fator importante para garantir a saúde e o bom funcionamento do sistema. Para isso, foram implementadas as seguintes estratégias:
+
+- **Criação de Fluxo de Health Check**: Foi implementado um fluxo de health check para observar o status das partes críticas do sistema, como banco de dados.
+
+- **Colunas para histórico de comportamento das entidades**: Embora os campos created_at e updated_at não sejam diretamente responsáveis pela monitoração do sistema em tempo real, eles fornecem informações importantes sobre o histórico e o comportamento das entidades ao longo do tempo. Esses dados podem ser utilizados para auditoria e rastreamento no decorrer do tempo.
+
+
+Estratégias que podem ser propostas:
+
+- **APM**: Como passo futuro, pode ser sugerido a adição de um APM como [Elastic](https://www.elastic.co/pt/observability/application-performance-monitoring) ou [Datadog](https://www.datadoghq.com/product/apm/) para ajudar na observabilidade geral da aplicação. 
+
 
 ## License
 
