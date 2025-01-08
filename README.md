@@ -39,6 +39,14 @@ A implementação do desafio está utilizando as seguintes tecnologias:
 - [Swagger](https://swagger.io/)
 
 
+## Diagrama de Entidade-Relacionamento
+
+O diagrama de entidade-relacionamento (DER) a seguir foi modelado para representar a estrutura do banco de dados no contexto do desafio. Ele ilustra as entidades principais e seus relacionamentos, fornecendo uma visão ilustrativa do fluxo de dados.
+
+<img src="./.github/image/diagram-entity-relationship.png" style="margin-left: 0px"
+     alt="Diagrama entidade relacionamento modelado para o desafio" width="700">
+
+
 ## Execução do projeto localmente com o docker-compose
 
 
