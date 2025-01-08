@@ -121,6 +121,11 @@ export class GrowerController {
     status: HttpStatus.NOT_FOUND,
     description: 'Proprietário não encontrado por id',
   })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description:
+      'Não foi possível remover o proprietário devido a ele possuir propriedades associadas',
+  })
   @ApiParam({ name: 'id', description: 'Id do proprietário', type: String })
   delete(
     @Param() { id }: DeleteGrowerRequestDto,
