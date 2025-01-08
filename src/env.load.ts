@@ -16,7 +16,6 @@ interface ConfigProps {
     synchronize: boolean;
     logging: boolean;
     migrationsRun: boolean;
-    autoLoadEntities: boolean;
   };
 }
 
@@ -53,12 +52,6 @@ export const envConfig: ConfigProps = {
     logging: parseBoolean(ensureEnvVar('TYPEORM_LOGGING', env.TYPEORM_LOGGING)),
     migrationsRun: parseBoolean(
       ensureEnvVar('TYPEORM_MIGRATIONS_RUN', env.TYPEORM_MIGRATIONS_RUN),
-    ),
-    autoLoadEntities: parseBoolean(
-      ensureEnvVar(
-        'TYPEORM_AUTO_LOAD_ENTITIES',
-        env.TYPEORM_AUTO_LOAD_ENTITIES,
-      ),
     ),
   },
 };
