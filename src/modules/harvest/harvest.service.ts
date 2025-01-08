@@ -39,7 +39,8 @@ export class HarvestService {
       ...data,
       agriculturalProperty,
     });
-    return this.harvestRepository.save(harvest);
+    await this.harvestRepository.save(harvest);
+    return this.findOneById(harvest.id);
   }
 
   async findOneById(id: string): Promise<FindOneByIdHarvestResponseDto> {
