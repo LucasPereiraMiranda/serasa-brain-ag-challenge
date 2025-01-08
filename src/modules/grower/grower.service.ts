@@ -72,9 +72,13 @@ export class GrowerService {
     };
   }
 
-  async findOneById(id: string): Promise<FindOneByIdGrowerResponseDto> {
+  async findOneById(
+    id: string,
+    relations?: string[],
+  ): Promise<FindOneByIdGrowerResponseDto> {
     const grower = await this.growerRepository.findOne({
       where: { id },
+      relations,
     });
 
     if (!grower) {
@@ -98,7 +102,16 @@ export class GrowerService {
   }
 
   async delete(id: string): Promise<DeleteGrowerResponseDto> {
-    const existentGrower = await this.findOneById(id);
+    const existentGrower = await this.findOneById(id, [
+      'agriculturalProperties',
+    ]);
+
+    if (existentGrower.agriculturalProperties.length > 0) {
+      throw new BadRequestException(
+        `Unable to delete grower with id ${id}. This grower has one or more associated agricultural properties. Please remove or reassign the properties before attempting deletion.`,
+      );
+    }
+
     const { affected } = await this.growerRepository.delete({
       id: existentGrower.id,
     });
