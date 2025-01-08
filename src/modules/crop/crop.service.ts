@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import { CreateCropResponseDto } from './dto/response/create-crop.response.dto';
@@ -16,6 +20,11 @@ export class CropService {
   ) {}
 
   async create(data: CreateCropRequestDto): Promise<CreateCropResponseDto> {
+    const { name } = data;
+    const existsbyName = await this.findOneByName(name);
+    if (existsbyName) {
+      throw new ConflictException(`crop with name ${name} already exists`);
+    }
     const crop = this.cropRepository.create(data);
     return await this.cropRepository.save(crop);
   }
@@ -28,6 +37,14 @@ export class CropService {
     if (!crop) {
       throw new NotFoundException(`crop with id ${id} not found`);
     }
+
+    return crop;
+  }
+
+  async findOneByName(name: string): Promise<Crop> {
+    const crop = await this.cropRepository.findOne({
+      where: { name },
+    });
 
     return crop;
   }

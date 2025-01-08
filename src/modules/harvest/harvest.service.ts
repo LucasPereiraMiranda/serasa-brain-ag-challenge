@@ -10,6 +10,8 @@ import { FindAllHarvestResponseDto } from './dto/response/findAll-harvest.respon
 import { AgriculturalPropertyService } from '../agricutural-property/agricultural-property.service';
 import { CropService } from '../crop/crop.service';
 import { HarvestToCrop } from '../harvest-to-crop/harvest-to-crop.entity';
+import { RemoveCropsHarvestResponseDto } from './dto/response/removeCrops-harvest.response.dto';
+import { AddCropsHarvestResponseDto } from './dto/response/addCrops-harvest.response.dto';
 
 @Injectable()
 export class HarvestService {
@@ -71,9 +73,11 @@ export class HarvestService {
     };
   }
 
-  async addCropsToHarvest(harvestId: string, cropIds: string[]): Promise<any> {
+  async addCropsToHarvest(
+    harvestId: string,
+    cropIds: string[],
+  ): Promise<AddCropsHarvestResponseDto> {
     const harvest = await this.findOneById(harvestId);
-
     const cropsToAdd = await this.cropService.findByIds(cropIds);
 
     if (cropsToAdd.length === 0) {
@@ -97,14 +101,13 @@ export class HarvestService {
       ...harvest.harvestToCrops,
       ...newRelations,
     ]);
-
     return await this.findOneById(harvestId);
   }
 
   async removeCropsFromHarvest(
     harvestId: string,
     cropIds: string[],
-  ): Promise<Harvest> {
+  ): Promise<RemoveCropsHarvestResponseDto> {
     const harvest = await this.findOneById(harvestId);
 
     const cropsToRemove = harvest.harvestToCrops.filter((harvestToCrop) =>
@@ -116,7 +119,6 @@ export class HarvestService {
     }
 
     await this.harvestToCropRepository.remove(cropsToRemove);
-
     return await this.findOneById(harvestId);
   }
 }

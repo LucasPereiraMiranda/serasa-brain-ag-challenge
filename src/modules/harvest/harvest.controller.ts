@@ -84,7 +84,6 @@ export class HarvestController {
     description: 'Safras paginadas e quantidade obtidas com sucesso',
     type: FindAllHarvestResponseDto,
   })
-  @Get()
   async findAll(
     @Query()
     queries: FindAllHarvestQueryRequestDto,
