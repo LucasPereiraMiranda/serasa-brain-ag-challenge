@@ -22,7 +22,7 @@
 
 ## Descrição do desafio
 
-A descrição completa do desafio pode ser encontrada no seguinte [link](https://github.com/brain-ag/trabalhe-conosco/blob/main/README.md)
+O desafio consiste em desenvolver uma aplicação backend para atender aos requisitos descritos no [documento oficial](https://github.com/brain-ag/trabalhe-conosco/blob/main/README.md).
 
 ## Techs
 
@@ -43,7 +43,8 @@ A implementação do desafio está utilizando as seguintes tecnologias:
 
 
 1) Inicialmente, podemos conferir se existem processos executando nas portas 3000 e 5432. 
-Caso houver, precisamos desliga-los temporariamente para a execução do projeto a partir do docker-compose.
+
+Caso houver, precisamos desligá-los temporariamente para a execução do projeto a partir do docker-compose.
 
 2) Podemos copiar o .env.example existente na raiz do projeto, e duplicá-lo com o nome .env:
 
@@ -67,20 +68,37 @@ Ocorrendo assim este preview de execução:
 <img src="./.github/image/execution-preview.png" style="margin-left: 0px"
      alt="Preview de execução com o docker-compose" width="700">
 
+## Execução dos testes
 
-Para rodar migrations, podemos criar a entidade, e após isto rodar:
+Para executar os testes automatizados, podemos invocar o comando:
 
 ```bash
-$ npm run migration:generate
+$ npm run test
 ```
 
-Para criar a migration gerada, podemos rodar:
+O qual executará os testes unitários trazendo a seguinte previsão:
+
+<img src="./.github/image/test-preview.png" style="margin-left: 0px"
+     alt="Preview de execução dos testes" width="700">
+
+
+
+## Execução das migrations
+
+
+Para executar as migrations existentes, podemos invocar o comando:
 
 ```bash
 $ npm run migration:run
 ```
 
-Com o banco apontando para localhost durante a execução da migration
+Para gerar uma nova migration a partir de uma nova entidade, podemos executar:
+
+```bash
+$ npm run migration:generate
+```
+
+`Observação`: Para executar estes processos, precisamos que o container associado ao postgres esteja ativo. Para executar as migrations via terminal, precisamos apontar para o container (no redirecionamento para o localhost) durante a execução da migration.
 
 ## License
 
