@@ -147,8 +147,8 @@ export class AgriculturalPropertyService {
       this.agriculturalPropertyRepository.sum('arableArea'),
     ]);
     return {
-      sumVegetationArea,
-      sumArableArea,
+      sumVegetationArea: sumVegetationArea || 0,
+      sumArableArea: sumArableArea || 0,
     };
   }
 }
