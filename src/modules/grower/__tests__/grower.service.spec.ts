@@ -8,6 +8,7 @@ import {
 import { Grower } from '../grower.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { growerCnpjMock, growerCpfMock } from './mocks/grower.mock';
+import { agriculturalPropertyMock } from '../../agricutural-property/__tests__/mocks/agricultural-property.mock';
 
 describe('GrowerService', () => {
   let growerService: GrowerService;
@@ -114,6 +115,16 @@ describe('GrowerService', () => {
 
       expect(growerService.findOneById('id')).rejects.toThrow();
     });
+
+    it('should successfully find one grower by id using relations', async () => {
+      repositoryMock.findOne = jest.fn().mockResolvedValue(growerCpfMock);
+
+      const result = await growerService.findOneById('id', [
+        'agriculturalProperties',
+      ]);
+
+      expect(result).toEqual(growerCpfMock);
+    });
   });
 
   describe('update grower', () => {
@@ -137,12 +148,23 @@ describe('GrowerService', () => {
 
   describe('delete grower', () => {
     it('should successfully delete existent grower', async () => {
-      repositoryMock.findOne = jest.fn().mockResolvedValue(growerCpfMock);
+      repositoryMock.findOne = jest
+        .fn()
+        .mockResolvedValue({ ...growerCpfMock, agriculturalProperties: [] });
       repositoryMock.delete = jest.fn().mockResolvedValue({ affected: 1 });
 
       const result = await growerService.delete('id');
 
       expect(result).toEqual({ deleted: true });
+    });
+
+    it('should throw when attempting to delete a grower with related agricultural properties', async () => {
+      repositoryMock.findOne = jest.fn().mockResolvedValue({
+        ...growerCpfMock,
+        agriculturalProperties: [agriculturalPropertyMock],
+      });
+
+      expect(growerService.delete('id')).rejects.toThrow();
     });
   });
 
