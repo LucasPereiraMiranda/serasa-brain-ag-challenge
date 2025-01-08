@@ -24,9 +24,10 @@ export class AgriculturalPropertyService {
   ) {}
 
   async create(
-    data: CreateAgriculturalPropertyRequestDto,
+    agriculturalPropertyToCreate: CreateAgriculturalPropertyRequestDto,
   ): Promise<CreateAgriculturalPropertyResponseDto> {
-    const { growerId, totalArea, arableArea, vegetationArea } = data;
+    const { growerId, totalArea, arableArea, vegetationArea } =
+      agriculturalPropertyToCreate;
 
     if (!this.isValidArea(totalArea, arableArea, vegetationArea)) {
       throw new BadRequestException(
@@ -36,7 +37,7 @@ export class AgriculturalPropertyService {
 
     const grower = await this.growerService.findOneById(growerId);
     const agriculturalProperty = this.agriculturalPropertyRepository.create({
-      ...data,
+      ...agriculturalPropertyToCreate,
       grower,
     });
     return this.agriculturalPropertyRepository.save(agriculturalProperty);

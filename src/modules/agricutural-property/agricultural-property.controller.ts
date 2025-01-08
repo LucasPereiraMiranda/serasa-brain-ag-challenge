@@ -40,11 +40,9 @@ export class AgriculturalPropertyController {
   })
   create(
     @Body()
-    createAgriculturalPropertyRequestDto: CreateAgriculturalPropertyRequestDto,
+    input: CreateAgriculturalPropertyRequestDto,
   ): Promise<CreateAgriculturalPropertyResponseDto> {
-    return this.agriculturalPropertyService.create(
-      createAgriculturalPropertyRequestDto,
-    );
+    return this.agriculturalPropertyService.create(input);
   }
 
   @Get(':id')
