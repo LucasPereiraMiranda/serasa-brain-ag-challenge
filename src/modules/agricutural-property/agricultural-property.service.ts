@@ -13,6 +13,10 @@ import { GrowerService } from '../grower/grower.service';
 import { FindOneByIdAgriculturalPropertyResponseDto } from './dto/response/findOneById-agricultural-property.response.dto';
 import { FindAllAgriculturalPropertyQueryRequestDto } from './dto/request/findAll-agricultural-property.request.dto';
 import { FindAllAgriculturalPropertyResponseDto } from './dto/response/findAll-agricultural-property.response.dto';
+import { DashboardPropertiesByStateItemResponseDto } from './dto/response/dashboardPropertiesByState.response.dto copy';
+import { DashboardTotalPropertiesResponseDto } from './dto/response/dashboardTotalProperties.response.dto';
+import { DashboardPropertiesByCropItemResponseDto } from './dto/response/dashboardPropertiesByCrop.response.dto';
+import { DashboardLandUseResponseDto } from './dto/response/dashboardLandUse.response.dto';
 
 @Injectable()
 export class AgriculturalPropertyService {
@@ -84,6 +88,67 @@ export class AgriculturalPropertyService {
     return {
       data,
       count,
+    };
+  }
+
+  async dashboardTotalProperties(): Promise<DashboardTotalPropertiesResponseDto> {
+    const [count, sumTotalArea] = await Promise.all([
+      this.agriculturalPropertyRepository.count(),
+      this.agriculturalPropertyRepository.sum('totalArea'),
+    ]);
+    return {
+      count: count || 0,
+      sumTotalArea: sumTotalArea || 0,
+    };
+  }
+
+  async dashboardPropertiesByState(): Promise<
+    DashboardPropertiesByStateItemResponseDto[]
+  > {
+    const result = await this.agriculturalPropertyRepository
+      .createQueryBuilder('agriculturalProperty')
+      .select('agriculturalProperty.state', 'state')
+      .addSelect('COUNT(agriculturalProperty.id)', 'count')
+      .groupBy('agriculturalProperty.state')
+      .getRawMany();
+
+    const formattedResult = result.map((row) => ({
+      state: row.state,
+      count: parseInt(row.count, 10),
+    }));
+    return formattedResult;
+  }
+
+  async dashboardPropertiesByCrop(): Promise<
+    DashboardPropertiesByCropItemResponseDto[]
+  > {
+    const result = await this.agriculturalPropertyRepository
+      .createQueryBuilder('ap')
+      .innerJoin('ap.harverts', 'h')
+      .innerJoin('h.harvestToCrops', 'htc')
+      .innerJoin('htc.crop', 'c')
+      .select('c.name', 'cropName')
+      .addSelect('COUNT(DISTINCT ap.id)', 'count')
+      .addSelect('SUM(ap."total_area")', 'sumTotalArea')
+      .groupBy('c.name')
+      .getRawMany();
+
+    const formattedResult = result.map((row) => ({
+      cropName: row.cropName,
+      count: parseInt(row.count, 10),
+      sumTotalArea: parseFloat(row.sumTotalArea),
+    }));
+    return formattedResult;
+  }
+
+  async dashboardLandUse(): Promise<DashboardLandUseResponseDto> {
+    const [sumVegetationArea, sumArableArea] = await Promise.all([
+      this.agriculturalPropertyRepository.sum('vegetationArea'),
+      this.agriculturalPropertyRepository.sum('arableArea'),
+    ]);
+    return {
+      sumVegetationArea,
+      sumArableArea,
     };
   }
 }
