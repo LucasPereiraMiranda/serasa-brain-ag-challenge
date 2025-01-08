@@ -30,6 +30,7 @@ A implementação do desafio está utilizando as seguintes tecnologias:
 
 - [Typescript](https://www.typescriptlang.org/)
 - [Nest](https://nestjs.com/)
+- [Npm](https://www.npmjs.com/)
 - [Node](https://nodejs.org/en)
 - [Typeorm](https://typeorm.io/)
 - [Docker](https://www.docker.com/)
