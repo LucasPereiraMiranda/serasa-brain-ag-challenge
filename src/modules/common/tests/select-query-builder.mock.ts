@@ -1,0 +1,41 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { SelectQueryBuilder } from 'typeorm';
+
+// @ts-ignore
+export const selectQueryBuilderMock: () => SelectQueryBuilder<any> = jest.fn(
+  () => ({
+    innerJoinAndSelect: jest.fn().mockReturnThis(),
+    leftJoinAndSelect: jest.fn().mockReturnThis(),
+    innerJoin: jest.fn().mockReturnThis(),
+    leftJoin: jest.fn().mockReturnThis(),
+    orderBy: jest.fn().mockReturnThis(),
+    groupBy: jest.fn().mockReturnThis(),
+    addGroupBy: jest.fn().mockReturnThis(),
+    skip: jest.fn().mockReturnThis(),
+    take: jest.fn().mockReturnThis(),
+    update: jest.fn().mockReturnThis(),
+    getMany: jest.fn().mockReturnThis(),
+    getRawOne: jest.fn().mockReturnThis(),
+    getOne: jest.fn().mockReturnThis(),
+    getCount: jest.fn().mockReturnThis(),
+    getParameters: jest.fn().mockReturnThis(),
+    getQuery: jest.fn().mockReturnThis(),
+    select: jest.fn().mockReturnThis(),
+    addSelect: jest.fn().mockReturnThis(),
+    where: jest.fn().mockReturnThis(),
+    andWhere: jest.fn().mockReturnThis(),
+    setParameters: jest.fn().mockReturnThis(),
+    setParameter: jest.fn().mockReturnThis(),
+    set: jest.fn().mockReturnThis(),
+    delete: jest.fn().mockReturnThis(),
+    from: jest.fn().mockReturnThis(),
+    execute: jest.fn().mockReturnThis(),
+    orWhere: jest.fn().mockReturnThis(),
+    clone: jest.fn().mockReturnThis(),
+    limit: jest.fn().mockReturnThis(),
+    offset: jest.fn().mockReturnThis(),
+    getManyAndCount: jest.fn().mockImplementation(() => Promise.resolve([])),
+    getRawMany: jest.fn().mockImplementation(() => Promise.resolve([])),
+    whereInIds: jest.fn().mockReturnThis(),
+  }),
+);
