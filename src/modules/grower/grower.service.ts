@@ -106,7 +106,7 @@ export class GrowerService {
       'agriculturalProperties',
     ]);
 
-    if (existentGrower.agriculturalProperties.length > 0) {
+    if (existentGrower?.agriculturalProperties?.length > 0) {
       throw new BadRequestException(
         `Unable to delete grower with id ${id}. This grower has one or more associated agricultural properties. Please remove or reassign the properties before attempting deletion.`,
       );
