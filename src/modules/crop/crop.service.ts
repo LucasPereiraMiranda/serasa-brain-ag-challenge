@@ -61,6 +61,10 @@ export class CropService {
     const [data, count] = await this.cropRepository.findAndCount({
       take,
       skip,
+      cache: {
+        id: 'crops',
+        milliseconds: 10000,
+      },
     });
 
     return {
