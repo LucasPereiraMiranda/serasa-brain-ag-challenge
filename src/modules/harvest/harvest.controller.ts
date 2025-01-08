@@ -28,7 +28,7 @@ import { AddCropsHarvestResponseDto } from './dto/response/addCrops-harvest.resp
 import { RemoveCropsHarvestResponseDto } from './dto/response/removeCrops-harvest.response.dto';
 
 @Controller('harvest')
-@ApiTags('Harvest - Safra')
+@ApiTags('Safra - Harvest')
 export class HarvestController {
   constructor(private harvestService: HarvestService) {}
 

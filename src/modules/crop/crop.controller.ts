@@ -17,7 +17,7 @@ import { CropService } from './crop.service';
 import { CreateCropRequestDto } from './dto/request/create-crop.request.dto';
 
 @Controller('crop')
-@ApiTags('Crop - Cultura')
+@ApiTags('Cultura - Crop')
 export class CropController {
   constructor(private CropService: CropService) {}
 
