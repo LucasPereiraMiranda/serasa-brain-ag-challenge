@@ -46,9 +46,9 @@ export class GrowerController {
     description: 'Documento do proprietário inválido',
   })
   create(
-    @Body() createGrowerRequestDto: CreateGrowerRequestDto,
+    @Body() inputBody: CreateGrowerRequestDto,
   ): Promise<CreateGrowerResponseDto> {
-    return this.growerService.create(createGrowerRequestDto);
+    return this.growerService.create(inputBody);
   }
 
   @Put(':id')
@@ -64,13 +64,10 @@ export class GrowerController {
   })
   @ApiParam({ name: 'id', description: 'Id do proprietário', type: String })
   async update(
-    @Param() updateGrowerParamsRequestDto: UpdateGrowerParamsRequestDto,
-    @Body() updateGrowerBodyRequestDto: UpdateGrowerBodyRequestDto,
+    @Param() inputParams: UpdateGrowerParamsRequestDto,
+    @Body() inputBody: UpdateGrowerBodyRequestDto,
   ): Promise<UpdateGrowerResponseDto> {
-    return this.growerService.update(
-      updateGrowerParamsRequestDto,
-      updateGrowerBodyRequestDto,
-    );
+    return this.growerService.update(inputParams, inputBody);
   }
 
   @Get()
@@ -86,9 +83,9 @@ export class GrowerController {
   @Get()
   async findAll(
     @Query()
-    findAllGrowerQueryRequestDto: FindAllGrowerQueryRequestDto,
+    input: FindAllGrowerQueryRequestDto,
   ): Promise<FindAllGrowerResponseDto> {
-    return this.growerService.findAll(findAllGrowerQueryRequestDto);
+    return this.growerService.findAll(input);
   }
 
   @Get(':id')

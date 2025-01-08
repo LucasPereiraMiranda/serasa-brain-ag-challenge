@@ -28,9 +28,9 @@ export class GrowerService {
   ) {}
 
   async create(
-    createGrowerRequestDto: CreateGrowerRequestDto,
+    growerToCreate: CreateGrowerRequestDto,
   ): Promise<CreateGrowerResponseDto> {
-    const { document } = createGrowerRequestDto;
+    const { document } = growerToCreate;
 
     const alreadyExists = await this.findOneByDocument(document);
     if (alreadyExists) {
@@ -44,7 +44,7 @@ export class GrowerService {
       throw new BadRequestException(`Document ${document} is not valid`);
     }
 
-    return await this.growerRepository.save(createGrowerRequestDto);
+    return await this.growerRepository.save(growerToCreate);
   }
 
   async findOneByDocument(document: string): Promise<Grower> {
@@ -55,9 +55,9 @@ export class GrowerService {
   }
 
   async findAll(
-    findAllGrowerRequestDto: FindAllGrowerQueryRequestDto,
+    input: FindAllGrowerQueryRequestDto,
   ): Promise<FindAllGrowerResponseDto> {
-    const { take, skip } = findAllGrowerRequestDto;
+    const { take, skip } = input;
     const [data, count] = await Promise.all([
       this.growerRepository.find({
         take,
