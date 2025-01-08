@@ -34,9 +34,9 @@ export class CropController {
   })
   create(
     @Body()
-    createCropRequestDto: CreateCropRequestDto,
+    input: CreateCropRequestDto,
   ): Promise<CreateCropResponseDto> {
-    return this.CropService.create(createCropRequestDto);
+    return this.CropService.create(input);
   }
 
   @Get(':id')

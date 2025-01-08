@@ -19,13 +19,15 @@ export class CropService {
     private cropRepository: Repository<Crop>,
   ) {}
 
-  async create(data: CreateCropRequestDto): Promise<CreateCropResponseDto> {
-    const { name } = data;
+  async create(
+    cropToCreate: CreateCropRequestDto,
+  ): Promise<CreateCropResponseDto> {
+    const { name } = cropToCreate;
     const existsbyName = await this.findOneByName(name);
     if (existsbyName) {
       throw new ConflictException(`crop with name ${name} already exists`);
     }
-    const crop = this.cropRepository.create(data);
+    const crop = this.cropRepository.create(cropToCreate);
     return await this.cropRepository.save(crop);
   }
 
