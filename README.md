@@ -138,7 +138,7 @@ $ npm run migration:generate
 
 ## Swagger
 
-A aplicação contém um Swagger, que inclui os contratos e especificações para comunicação com a API. Ao executar a aplicação localmente com o Docker, o Swagger pode ser acessado por meio da seguinte URI:
+A aplicação contém um Swagger, que inclui os contratos e especificações para comunicação com a API. Ao executar a aplicação localmente, o Swagger pode ser acessado por meio da seguinte URI:
 
 ```bash
 $ http://localhost:3000/api#/
@@ -162,6 +162,7 @@ Para garantir que o sistema seja capaz de suportar um grande número de usuário
 - **Adição de Cache**: A utilização de cache foi implementada por meio da estratégia de armazenar resultados de consultas frequentes, reduzindo a carga nas tabelas que crescerão em densidade de dados com o intuito de manter um tempo saudável de resposta para os usuários e reduzir cargas no banco. A estratégia utilizada está contida no presente [link](https://orkhan.gitbook.io/typeorm/docs/caching).
 
 - **Adição de Paginação**: Foi implementada a paginação nos endpoints que retornam muitos registros (associados a findAll). Isso foi feito para evitar consultas que retornem grandes volumes de dados de uma só vez, ajudando a reduzir o tráfego de dados e melhorando a performance ao acessar as informações de forma mais controlada.
+
 
 ### Estratégias para observabilidade
 

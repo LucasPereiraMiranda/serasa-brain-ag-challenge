@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Repository } from 'typeorm';
+import { Repository, SelectQueryBuilder } from 'typeorm';
 
 import {
   MockRepository,
@@ -12,12 +12,13 @@ import { agriculturalPropertyMock } from './mocks/agricultural-property.mock';
 import { GrowerService } from '../../grower/grower.service';
 import { Grower } from '../../../modules/grower/grower.entity';
 import { growerCpfMock } from '../../../modules/grower/__tests__/mocks/grower.mock';
+import { selectQueryBuilderMock } from '../../common/tests/select-query-builder.mock';
 
 describe('AgriculturalPropertyService', () => {
   let agriculturalPropertyService: AgriculturalPropertyService;
   let growerService: GrowerService;
   let repositoryMock: MockRepository<Repository<AgriculturalProperty>>;
-
+  let selectQueryBuilder: SelectQueryBuilder<any>;
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -37,8 +38,12 @@ describe('AgriculturalPropertyService', () => {
     agriculturalPropertyService = module.get<AgriculturalPropertyService>(
       AgriculturalPropertyService,
     );
+    selectQueryBuilder = selectQueryBuilderMock();
     growerService = module.get<GrowerService>(GrowerService);
     repositoryMock = module.get(getRepositoryToken(AgriculturalProperty));
+    jest
+      .spyOn(repositoryMock, 'createQueryBuilder')
+      .mockReturnValue(selectQueryBuilder);
   });
 
   beforeEach(() => jest.clearAllMocks());
@@ -113,6 +118,126 @@ describe('AgriculturalPropertyService', () => {
 
       expect(result.data).toEqual([agriculturalPropertyMock]);
       expect(result.count).toEqual(1);
+    });
+  });
+
+  describe('dashboard total properties', () => {
+    it('should successfully find total agricultural properties', async () => {
+      repositoryMock.count = jest.fn().mockResolvedValue(3);
+      repositoryMock.sum = jest.fn().mockResolvedValue(480);
+
+      const result =
+        await agriculturalPropertyService.dashboardTotalProperties();
+
+      expect(result).toEqual({
+        count: 3,
+        sumTotalArea: 480,
+      });
+    });
+
+    it('should successfully find total agricultural properties as 0, if values are nullable', async () => {
+      repositoryMock.count = jest.fn().mockResolvedValue(null);
+      repositoryMock.sum = jest.fn().mockResolvedValue(null);
+
+      const result =
+        await agriculturalPropertyService.dashboardTotalProperties();
+
+      expect(result).toEqual({
+        count: 0,
+        sumTotalArea: 0,
+      });
+    });
+  });
+
+  describe('dashboard properties by state', () => {
+    it('should successfully find properties by state', async () => {
+      jest.spyOn(selectQueryBuilder, 'getRawMany').mockReturnValue([
+        {
+          state: 'MG',
+          count: '2',
+        },
+        {
+          state: 'SP',
+          count: '1',
+        },
+      ] as any);
+
+      const result =
+        await agriculturalPropertyService.dashboardPropertiesByState();
+
+      expect(result).toEqual([
+        {
+          state: 'MG',
+          count: 2,
+        },
+        {
+          state: 'SP',
+          count: 1,
+        },
+      ]);
+    });
+  });
+
+  describe('dashboard properties by crop', () => {
+    it('should successfully find properties by crop', async () => {
+      jest.spyOn(selectQueryBuilder, 'getRawMany').mockReturnValue([
+        {
+          cropName: 'Mandioca',
+          count: '1',
+          sumTotalArea: '180',
+        },
+        {
+          cropName: 'Milho',
+          count: '1',
+          sumTotalArea: '150',
+        },
+      ] as any);
+
+      const result =
+        await agriculturalPropertyService.dashboardPropertiesByCrop();
+
+      expect(result).toEqual([
+        {
+          cropName: 'Mandioca',
+          count: 1,
+          sumTotalArea: 180,
+        },
+        {
+          cropName: 'Milho',
+          count: 1,
+          sumTotalArea: 150,
+        },
+      ]);
+    });
+  });
+
+  describe('dashboard land use', () => {
+    it('should successfully find land use', async () => {
+      repositoryMock.sum = jest
+        .fn()
+        .mockResolvedValueOnce(150)
+        .mockResolvedValueOnce(330);
+
+      const result = await agriculturalPropertyService.dashboardLandUse();
+
+      expect(result).toEqual({
+        sumVegetationArea: 150,
+        sumArableArea: 330,
+      });
+    });
+
+    it('should successfully find land use as 0, if values are nullable', async () => {
+      repositoryMock.sum = jest
+        .fn()
+        .mockResolvedValueOnce(null)
+        .mockResolvedValueOnce(null);
+
+      const result = await agriculturalPropertyService.dashboardLandUse();
+
+      expect(result).toEqual({
+        sumVegetationArea: 0,
+        sumArableArea: 0,
+      });
     });
   });
 });
