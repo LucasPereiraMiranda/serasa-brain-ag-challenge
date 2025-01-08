@@ -169,9 +169,19 @@ A observabilidade é um fator importante para garantir o bom funcionamento do si
 
 - **Criação de Fluxo de Health Check**: Foi implementado um fluxo de health check para observar o status das partes críticas do sistema, como banco de dados.
 
-<img src="./.github/image/health-check-preview.png" style="margin-left: 0px"
-     alt="Preview do health check da aplicação" width="700">
-
+```json
+{
+  "uptime": 538.826759168,
+  "healthMessage": "OK",
+  "checks": [
+    {
+      "name": "Database",
+      "status": true,
+      "details": "Connected"
+    }
+  ]
+}
+```
 
 Estratégias que podem ser propostas:
 
