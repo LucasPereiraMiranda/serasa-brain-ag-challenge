@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsOptional, IsNumber, Max, Min, IsUUID } from 'class-validator';
+import { IsOptional, IsNumber, Max, Min } from 'class-validator';
 
 export class FindAllCropQueryRequestDto {
   @ApiProperty({
@@ -31,14 +31,4 @@ export class FindAllCropQueryRequestDto {
   @Max(10)
   @IsOptional()
   take?: number = 10;
-
-  @ApiProperty({
-    description: 'Id da safra a qual contém a cultura',
-    example: 'd8a9a870-b9f7-4a14-bcb6-8bfa1461e029',
-    required: false,
-    default: null,
-  })
-  @IsUUID()
-  @IsOptional()
-  harvestId?: string;
 }
