@@ -30,7 +30,7 @@ export class Harvest extends BaseEntity {
       nullable: false,
     },
   )
-  @JoinColumn({ name: 'harvest_id' })
+  @JoinColumn({ name: 'agricultural_property_id' })
   @Exclude()
   agriculturalProperty: AgriculturalProperty;
 
