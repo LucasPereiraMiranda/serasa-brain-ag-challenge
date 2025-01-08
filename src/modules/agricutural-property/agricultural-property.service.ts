@@ -42,7 +42,7 @@ export class AgriculturalPropertyService {
     return this.agriculturalPropertyRepository.save(agriculturalProperty);
   }
 
-  isValidArea(
+  private isValidArea(
     totalArea: number,
     arableArea: number,
     vegetationArea: number,

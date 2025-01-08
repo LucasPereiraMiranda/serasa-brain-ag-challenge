@@ -28,6 +28,10 @@ export class CropController {
     description: 'Cultura criada com sucesso',
     type: CreateCropResponseDto,
   })
+  @ApiResponse({
+    status: HttpStatus.CONFLICT,
+    description: 'Nome da cultura ja cadastrado',
+  })
   create(
     @Body()
     createCropRequestDto: CreateCropRequestDto,
