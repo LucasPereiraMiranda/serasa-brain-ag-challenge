@@ -78,7 +78,7 @@ $ npm run test
 
 O qual executará os testes unitários trazendo a seguinte previsão:
 
-<img src="./.github/image/test-preview.png" style="margin-left: 0px"
+<img src="./.github/image/tests-preview.png" style="margin-left: 0px"
      alt="Preview de execução dos testes" width="700">
 
 
