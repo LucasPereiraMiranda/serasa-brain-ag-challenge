@@ -3,6 +3,7 @@ import { BaseEntity } from '../common/entity/base.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { Grower } from '../grower/grower.entity';
 import { Harvest } from '../harvest/harvest.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class AgriculturalProperty extends BaseEntity {
@@ -55,12 +56,13 @@ export class AgriculturalProperty extends BaseEntity {
   vegetationArea: number;
 
   @ManyToOne(() => Grower, (grower) => grower.agriculturalProperties, {
-    eager: true,
     nullable: false,
   })
   @JoinColumn({ name: 'grower_id' })
+  @Exclude()
   grower: Grower;
 
   @OneToMany(() => Harvest, (harvest) => harvest.agriculturalProperty)
+  @Exclude()
   harverts: Harvest[];
 }

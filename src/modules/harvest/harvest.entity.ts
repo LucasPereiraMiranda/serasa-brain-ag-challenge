@@ -3,6 +3,7 @@ import { BaseEntity } from '../common/entity/base.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { AgriculturalProperty } from '../agricutural-property/agricultural-property.entity';
 import { HarvestToCrop } from '../harvest-to-crop/harvest-to-crop.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class Harvest extends BaseEntity {
@@ -26,13 +27,31 @@ export class Harvest extends BaseEntity {
     () => AgriculturalProperty,
     (agriculturalProperty) => agriculturalProperty.harverts,
     {
-      eager: true,
       nullable: false,
     },
   )
   @JoinColumn({ name: 'harvest_id' })
+  @Exclude()
   agriculturalProperty: AgriculturalProperty;
 
+  @ApiProperty({
+    type: [HarvestToCrop],
+    example: [
+      {
+        id: '265b6023-6b58-4786-a44c-206875fa10de',
+        createdAt: '2025-01-08T14:21:51.006Z',
+        updatedAt: '2025-01-08T14:21:51.006Z',
+        crop: {
+          id: 'a8a9a870-b9f7-4a14-bcb6-8bfa1461e029',
+          createdAt: '2025-01-08T14:20:42.803Z',
+          updatedAt: '2025-01-08T14:20:42.803Z',
+          name: 'Algodão',
+        },
+      },
+    ],
+    description: 'Associação entre safra e culturas',
+    isArray: true,
+  })
   @OneToMany(() => HarvestToCrop, (harvestToCrop) => harvestToCrop.harvest)
-  public harvestToCrops: HarvestToCrop[];
+  harvestToCrops: HarvestToCrop[];
 }
