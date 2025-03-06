@@ -98,7 +98,7 @@ $ npm install
 
 3) Podemos criar o banco de dados, levando em consideração os valores contidos no .env
 
-3) Podemos executar o projeto em modo de desenvolvimento:
+4) Podemos executar o projeto em modo de desenvolvimento:
 
 ```bash
 $ npm run start:dev
@@ -166,10 +166,7 @@ Para garantir que o sistema seja capaz de suportar um grande número de usuário
 
 ### Estratégias para observabilidade
 
-A observabilidade é um fator importante para garantir o bom funcionamento do sistema produtivo. Para isso, foram implementadas as seguintes estratégias no desafio:
-
-
-- **Colunas para histórico de comportamento das entidades**: Embora as colunas created_at e updated_at não sejam diretamente responsáveis pela monitoração do sistema em tempo real, elas fornecem informações importantes sobre o histórico e o comportamento dos registros ao longo do tempo. Esses dados podem ser utilizados para auditoria no decorrer do tempo.
+A observabilidade é um fator importante para garantir o bom funcionamento do sistema produtivo. Para isso, foi implementada a seguinte estratégia no desafio:
 
 - **Criação de Fluxo de Health Check**: Foi implementado um fluxo de health check para observar o status das partes críticas do sistema, como banco de dados.
 
@@ -192,6 +189,6 @@ Estratégias que podem ser propostas:
 - **APM**: Como passo futuro, pode ser sugerido a adição de um APM como [Elastic](https://www.elastic.co/pt/observability/application-performance-monitoring) ou [Datadog](https://www.datadoghq.com/product/apm/) para ajudar na observabilidade geral da aplicação.
 
 
-## License
+## Licença
 
 [MIT](https://choosealicense.com/licenses/mit/)
