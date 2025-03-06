@@ -22,7 +22,7 @@
 
 Please select the language that you would like to see the documentation:
 
-- [🇧🇷 Versão em Português](README.md)
+- [🇧🇷 Versão em Português](README.pt.md)
 
 - [🇬🇧 English Version](README.en.md)
 
